@@ -22,6 +22,7 @@ endfunction
 
 function! s:h.capture(hlname) "{{{1
   let hlname = a:hlname
+
   while 1
     redir => HL_SAVE
     execute 'silent! highlight ' . hlname
@@ -29,6 +30,7 @@ function! s:h.capture(hlname) "{{{1
     if !empty(matchstr(HL_SAVE, 'xxx cleared$'))
       return ''
     endif
+    " follow highlight link
     let ml = matchlist(HL_SAVE, 'xxx links to \zs.*')
     if !empty(ml)
       let hlname = ml[0]
@@ -189,7 +191,7 @@ function! s:h.hl_defstr(color) "{{{1
     endfor
   endfor
   return join(R)
-endfunction "}}}
+endfunction
 
 function! s:h.dump() "{{{1
   return PP(self)
